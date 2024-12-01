@@ -65,15 +65,17 @@ class CardDataController extends Controller
         // Close file
         fclose($handle);
 
-        return $csvPath;
+        return storage_path('app/' . $csvPath);
     }
 
     public function processCard(Request $request)
     {
+        // Validate image file
         $request->validate([
             'image' => 'required|image|mimes:jpg,jpeg,png,bmp|max:2048',
         ]);
 
+        // Store the image
         $imagePath = $request->file('image')->store('temp');
         $fullImagePath = storage_path('app/' . $imagePath);
 
@@ -85,22 +87,16 @@ class CardDataController extends Controller
         try {
             $extractedText = $ocr->run();
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error processing the image',
-                'error' => $e->getMessage(),
-            ], 500);
+            return redirect()->back()->with('error_message', 'Error processing the image: ' . $e->getMessage());
         }
 
         // Parse text into structured data
         $structuredData = $this->parseTextToStructure($extractedText);
 
-        // Generate CSV and return download link
+        // Generate CSV and get the full path
         $csvPath = $this->generateCsvFromStructuredData($structuredData);
 
-        return response()->json([
-            'message' => 'Data processed successfully',
-            'download_link' => url('storage/' . $csvPath),
-            'data' => $structuredData, // Optional, for debugging
-        ]);
+        // Return the file directly for download
+        return response()->download($csvPath)->deleteFileAfterSend(true);
     }
 }
