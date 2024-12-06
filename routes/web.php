@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CashfreePaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +28,20 @@ Route::get('login', function () {
 Route::get('register', function () {
     return view('register');
 });
+
+Route::middleware('auth')->get('/dashboard', [SubscriptionController::class, 'index'])->name('dashboard');
+Route::get('/pricing', function () {
+    return view('pricing');
+})->name('pricing');
+
+
+Route::get('/pricing', [SubscriptionController::class, 'showPricing'])->name('pricing');
+Route::post('/payment/initiate', [SubscriptionController::class, 'initiatePayment'])->name('initiatePayment')->middleware('auth');
+Route::get('/payment/callback', [CashfreePaymentController::class, 'paymentCallback'])->name('cashfree.payment.callback');
+
+
+
+
 
 Route::get('dashboard/bussiness', function () {
     return view('dashboard/bussiness');

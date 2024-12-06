@@ -12,12 +12,29 @@
             </a>
         </div>
         <div class="inline-flex items-center ml-5 space-x-6 justify-center sm:justify-end w-full md:w-auto">
-            <a href="{{url('/login')}}" class="text-base font-medium leading-6 text-gray-600 transition duration-150 ease-in-out hover:text-gray-900">
+            <!-- Check if the user is authenticated -->
+            @auth
+            <!-- Check if the user has an active subscription -->
+            @if (Auth::user()->subscription_status == 1)
+            <!-- Display the Dashboard button if the user is subscribed -->
+            <a href="{{ route('dashboard') }}" class="text-base font-medium leading-6 text-gray-600 transition duration-150 ease-in-out hover:text-gray-900">
+                Dashboard
+            </a>
+            @else
+            <!-- If the user is not subscribed, redirect to pricing page -->
+            <a href="{{ route('pricing') }}" class="text-base font-medium leading-6 text-gray-600 transition duration-150 ease-in-out hover:text-gray-900">
+                Subscribe
+            </a>
+            @endif
+            @else
+            <!-- Display Sign in and Sign up buttons if the user is not logged in -->
+            <a href="{{ url('/login') }}" class="text-base font-medium leading-6 text-gray-600 transition duration-150 ease-in-out hover:text-gray-900">
                 Sign in
             </a>
-            <a href="{{url('/register')}}" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white whitespace-no-wrap rounded-md shadow-sm hover:bg-[#0f3e37] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#114A43]" style="background-color: #114A43;">
+            <a href="{{ url('/register') }}" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white whitespace-no-wrap rounded-md shadow-sm hover:bg-[#0f3e37] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#114A43]" style="background-color: #114A43;">
                 Sign up
             </a>
+            @endauth
         </div>
     </div>
 </section>
@@ -38,7 +55,7 @@
                     </p>
                     <div class="relative flex flex-col sm:flex-row sm:space-x-4">
                         <a href="{{url('/login')}}" class="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto" style="background-color: #114A43;">
-                            Try It Free
+                            Let's Start
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>
