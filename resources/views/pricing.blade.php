@@ -25,16 +25,18 @@
                 </p>
                 <div class="flex items-center justify-center mt-6 leading-7 text-gray-900 border-0 border-solid sm:mt-8">
                     <p class="box-border m-0 text-6xl font-semibold leading-normal text-center border-0 border-gray-200">
-                        ${{ $plan->price }}
+                        {{ $plan->price }}
                     </p>
                     <p class="box-border my-0 ml-4 mr-0 text-xs text-left border-0 border-gray-200">
                         per user <span class="block">per month</span>
                     </p>
                 </div>
-                <form action="{{ route('initiatePayment') }}" method="POST">
+                <form action="{{ route('store') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="plan_id" value="{{ $plan->id }}">
-                    <button type="submit">Select Plan</button>
+                    <input type="hidden" name="name" value="{{ Auth::user()->name }}"> <!-- Assuming you're using Auth -->
+                    <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                    <input type="hidden" name="amount" value="{{ $plan->price }}">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md">Pay Now</button>
                 </form>
             </div>
             @endforeach

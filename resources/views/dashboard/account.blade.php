@@ -180,17 +180,9 @@
                       <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
                     </div>
                   </div>
-                  <form action="{{ route('upload.card') }}" method="POST" enctype="multipart/form-data">
+                  <form enctype="multipart/form-data">
                     @csrf
-                    <!-- Drag and Drop File Upload -->
-                    <div class="mb-3">
-                      <label class="form-label" for="file-upload">Upload Your Invoice (Drag and Drop)</label>
-                      <div id="drop-area" class="border p-3 text-center">
-                        <p id="drop-text" class="text-muted">Drag and drop a file here, or click to select one.</p>
-                        <input type="file" id="file-upload" name="image" class="d-none" required />
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-warning">Send</button>
+                    <button type="submit" class="btn btn-warning">Request</button>
                   </form>
                 </div>
               </div>

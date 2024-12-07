@@ -31,7 +31,7 @@
             <a href="{{ url('/login') }}" class="text-base font-medium leading-6 text-gray-600 transition duration-150 ease-in-out hover:text-gray-900">
                 Sign in
             </a>
-            <a href="{{ url('/register') }}" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-white whitespace-no-wrap rounded-md shadow-sm hover:bg-[#0f3e37] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#114A43]" style="background-color: #114A43;">
+            <a href="{{ url('/register') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white rounded-md shadow-md transform transition-all duration-200 ease-in-out hover:scale-105 hover:bg-[#0d2d26] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0f3e37]" style="background-color: #114A43;">
                 Sign up
             </a>
             @endauth
@@ -64,7 +64,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Right Image Section -->
             <div class="w-full sm:w-1/2 mt-8 sm:mt-0">
                 <div class="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
@@ -74,7 +73,6 @@
         </div>
     </div>
 </section>
-
 
 <!-- Section 3 -->
 <section class="w-full bg-white pt-7 pb-7 md:pt-20 md:pb-24">
@@ -193,13 +191,12 @@
                 </p>
                 <div class="flex items-center justify-center mt-6 leading-7 text-gray-900 border-0 border-solid sm:mt-8">
                     <p class="box-border m-0 text-6xl font-semibold leading-normal text-center border-0 border-gray-200">
-                        $19
+                        1599
                     </p>
                     <p class="box-border my-0 ml-4 mr-0 text-xs text-left border-0 border-gray-200">
                         per user <span class="block">per month</span>
                     </p>
                 </div>
-
                 <a href="{{url('/login')}}">
                     <button class="inline-flex items-center justify-center w-full py-3 mt-6 font-sans text-sm leading-none text-center text-blue-600 no-underline bg-transparent border border-b-2 border-blue-600 rounded-md cursor-pointer hover:bg-blue-600 hover:border-blue-600 hover:text-white sm:text-base sm:mt-8 md:text-lg">
                         Select Plan
@@ -215,7 +212,7 @@
                 </p>
                 <div class="flex items-center justify-center mt-6 leading-7 text-gray-900 border-0 border-solid sm:mt-8">
                     <p class="box-border m-0 text-6xl font-semibold leading-normal text-center border-0 border-gray-200">
-                        $39
+                        2599
                     </p>
                     <p class="box-border my-0 ml-4 mr-0 text-xs text-left border-0 border-gray-200">
                         per user <span class="block">per month</span>
@@ -225,7 +222,6 @@
                     <button class="inline-flex items-center justify-center w-full py-3 mt-6 font-sans text-sm leading-none text-center text-white no-underline bg-yellow-500 border-b-4 border-yellow-600 rounded cursor-pointer hover:bg-yellow-400 sm:text-base sm:mt-8 md:text-lg">
                         Select Plan
                     </button>
-
                 </a>
             </div>
             <div class="box-border px-4 py-8 text-center bg-white border-solid sm:px-4 sm:py-8 md:px-8 md:py-12 lg:px-10">
@@ -237,7 +233,7 @@
                 </p>
                 <div class="flex items-center justify-center mt-6 leading-7 text-gray-900 border-0 border-solid sm:mt-8">
                     <p class="box-border m-0 text-6xl font-semibold leading-normal text-center border-0 border-gray-200">
-                        $59
+                        3599
                     </p>
                     <p class="box-border my-0 ml-4 mr-0 text-xs text-center border-0 border-gray-200">
                         per user <span class="block">per month</span>

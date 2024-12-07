@@ -3,6 +3,8 @@
 use App\Http\Controllers\CashfreePaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,15 +33,22 @@ Route::get('register', function () {
 
 Route::middleware('auth')->get('/dashboard', [SubscriptionController::class, 'index'])->name('dashboard');
 Route::get('/pricing', function () {
-    return view('pricing');
+    $plans = DB::table('subscription_plans')->get();
+    return view('pricing', ['plans' => $plans]);
 })->name('pricing');
 
 
-Route::get('/pricing', [SubscriptionController::class, 'showPricing'])->name('pricing');
-Route::post('/payment/initiate', [SubscriptionController::class, 'initiatePayment'])->name('initiatePayment')->middleware('auth');
-Route::get('/payment/callback', [CashfreePaymentController::class, 'paymentCallback'])->name('cashfree.payment.callback');
+Route::post('cashfree/payments/create', [CashfreePaymentController::class, 'create'])->name('callback');
+Route::post('cashfree/payments/store', [CashfreePaymentController::class, 'store'])->name('store');
+Route::any('cashfree/payments/success', [CashfreePaymentController::class, 'success'])->name('success');
 
+Route::get('/subscription/success', function () {
+    return view('subscription-success'); // Create this view
+})->name('subscription.success');
 
+Route::get('/subscription/failure', function () {
+    return view('subscription-failure'); // Create this view
+})->name('subscription.failure');
 
 
 
@@ -61,9 +70,34 @@ Route::get('dashboard/iddocument', function () {
 Route::get('dashboard/yourdata', function () {
     return view('dashboard/yourdata');
 })->middleware(['auth', 'verified'])->name('yourdata');
+
+
 Route::get('dashboard/billing', function () {
-    return view('dashboard/billing');
+    // Retrieve the latest subscription for the authenticated user
+    $subscription = DB::table('subscriptions')
+        ->where('user_id', Auth::id())
+        ->latest('created_at')
+        ->first();
+
+    // Calculate the remaining days until expiration
+    $remainingDays = null;
+    if ($subscription && $subscription->end_date) {
+        $remainingDays = now()->diffInDays(\Carbon\Carbon::parse($subscription->end_date), false);
+    }
+
+    // Retrieve all subscriptions of the user for the history section
+    $user = Auth::user();  // Get the authenticated user
+
+    return view('dashboard.billing', [
+        'subscription' => $subscription,
+        'remainingDays' => $remainingDays,
+        'user' => $user,  // Pass the user data to the view
+    ]);
 })->middleware(['auth', 'verified'])->name('billing');
+
+
+
+
 Route::get('dashboard/account', function () {
     return view('dashboard/account');
 })->middleware(['auth', 'verified'])->name('account');
